@@ -186,6 +186,21 @@ class Enemy3(GameSprite):
 
 
 
+class Enemy4(GameSprite):
+    position = 'up'
+
+    def update_l_r(self, start , end):
+        
+        if self.rect.y <= start: 
+            self.position = "up"
+        if self.rect.y >= end:
+            self.position = "down"
+            
+        if self.position == "up":
+            self.rect.y += self.speed
+        elif self.position == "down":
+            self.rect.y -= self.speed
+
 
 
 
@@ -214,6 +229,7 @@ enemy = Enemy('Без_названия-removebg-preview.png', 800, 250, 1)
 enemy1 = Enemy1('Pastel_Pink-removebg-preview.png', 400, 320, 5)
 enemy2 = Enemy2('Paastel_Pink-removebg-preview.png', 600, 610, 2)
 enemy3 = Enemy3('Без_названия--removebg-preview.png', 770, 50, 2)
+enemy4 = Enemy4('Blue_Emoji_or_Joobi_-_Free_Smiley_Download-removebg-preview.png', 300, 150, 4)
 gold = GameSprite('Bitcoin.png', 700, 170, 0)
 
 wall1 = Wall(200, 247, 121, 20, 20, 850, 20)
@@ -260,6 +276,7 @@ while game:
     enemy1.reset()
     enemy2.reset()
     enemy3.reset()
+    enemy4.reset()
     gold.reset()
     denga.reset()
     player.update()
@@ -267,7 +284,7 @@ while game:
     enemy.update_l_r(600, 750)
     enemy1.update_l_r(400, 550)
     enemy2.update_l_r(515, 630)
-
+    enemy4.update_l_r(50, 300)
 
 
     wall1.draw_wall()
@@ -327,6 +344,7 @@ while game:
         sprite.collide_rect(player1, enemy) or \
         sprite.collide_rect(player, enemy1) or \
         sprite.collide_rect(player1, enemy2) or \
+        sprite.collide_rect(player1, enemy4) or \
         sprite.collide_rect(player, enemy2) or \
         sprite.collide_rect(player1, enemy1):
         kick.play()
@@ -339,5 +357,18 @@ while game:
         money.play()
         game = False
     
+
+
+
+    if sprite.collide_rect(player1, gold):
+        time.delay(1000)
+        money.play()
+        game = False
+
+
+
+
+
+
     display.update()
     clock.tick(fps)
